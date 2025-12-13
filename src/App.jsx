@@ -203,7 +203,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { authAPI, bookingAPI } from './services/api'
-import { AuthProvider } from './context/AuthContext'  // ADD THIS
+// import { AuthProvider } from './context/AuthContext'  // ADD THIS
 import Navbar from './components/Navbar'  // ADD THIS
 import Home from './pages/Home'
 import Facilities from './pages/Facilities'
@@ -233,7 +233,7 @@ function App() {
   }
 
   return (
-    <AuthProvider>  {/* ADD THIS WRAPPER */}
+   // <AuthProvider>  {/* ADD THIS WRAPPER */}
       <BrowserRouter>
         <Navbar />  {/* ADD THE NAVBAR HERE */}
         
@@ -298,7 +298,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    // </AuthProvider>
   )
 }
 

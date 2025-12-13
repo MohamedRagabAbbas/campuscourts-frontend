@@ -200,11 +200,12 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu, FiX, FiHome, FiGrid, FiCalendar, FiUser, FiLogOut, FiLogIn, FiArrowLeft } from 'react-icons/fi'
-import { useAuth } from '../context/AuthContext'
+// import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { user, logout } = useAuth()
+  // const { user, logout } = useAuth()
+  const [user, setUser] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
 
