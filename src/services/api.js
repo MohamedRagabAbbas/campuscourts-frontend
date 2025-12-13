@@ -59,13 +59,23 @@ export const authAPI = {
 };
 
 // Booking endpoints
+// export const bookingAPI = {
+//   getAll: () => api.get('/bookings'),
+//   getOne: (id) => api.get(`/bookings/${id}`),
+//   create: (data) => api.post('/bookings', data),
+//   update: (id, data) => api.put(`/bookings/${id}`, data),
+//   delete: (id) => api.delete(`/bookings/${id}`),
+// };
+
 export const bookingAPI = {
   getAll: () => api.get('/bookings'),
   getOne: (id) => api.get(`/bookings/${id}`),
+  getFacilityBookings: (facilityName, date) => 
+    api.get(`/bookings/facility/${facilityName}`, { params: { date } }),  // ✅ ADD THIS
   create: (data) => api.post('/bookings', data),
   update: (id, data) => api.put(`/bookings/${id}`, data),
   delete: (id) => api.delete(`/bookings/${id}`),
-};
+}
 
 // User endpoints
 export const userAPI = {
