@@ -243,7 +243,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>  {/* ✅ CLOSE WRAPPER */}
+    </AuthProvider>  
   )
 }
 
