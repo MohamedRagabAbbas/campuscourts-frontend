@@ -21,17 +21,36 @@ api.interceptors.request.use((config) => {
 });
 
 // Handle token expiration
+// api.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response?.status === 401) {
+//       localStorage.removeItem('token');
+//       localStorage.removeItem('user');
+//       window.location.href = '/login';
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
+import { useNavigate } from 'react-router-dom'; // If using React Router v6
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      // Only redirect if user WAS logged in (has a token)
+      const token = localStorage.getItem('token');
+      if (token) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
 );
+
 
 // Auth endpoints
 export const authAPI = {
