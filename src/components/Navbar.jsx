@@ -196,21 +196,28 @@
 // }
 
 // export default Navbar
-
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu, FiX, FiHome, FiGrid, FiCalendar, FiUser, FiLogOut, FiLogIn, FiArrowLeft } from 'react-icons/fi'
-// import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  // const { user, logout } = useAuth()
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Load user from localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [location.pathname])
+
   const handleLogout = () => {
-    logout()
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setUser(null)
     navigate('/')
     setIsOpen(false)
   }
@@ -222,7 +229,6 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path
 
-  // Don't show back button on these pages
   const hideBackButtonRoutes = ['/', '/login', '/register']
   const showBackButton = !hideBackButtonRoutes.includes(location.pathname)
 
@@ -240,9 +246,7 @@ const Navbar = () => {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Left Side: Back Button + Logo */}
           <div className="flex items-center space-x-3">
-            {/* Back Button - Desktop */}
             {showBackButton && (
               <button
                 onClick={handleBack}
@@ -254,7 +258,6 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <div className="bg-primary-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">
                 C
@@ -263,7 +266,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
@@ -296,7 +298,6 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
@@ -326,7 +327,6 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors duration-200"
@@ -335,11 +335,9 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 animate-fadeIn">
             <div className="flex flex-col space-y-2">
-              {/* Back Button - Mobile */}
               {showBackButton && (
                 <button
                   onClick={handleBack}
